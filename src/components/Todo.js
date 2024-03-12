@@ -83,48 +83,46 @@ const TodoComponents = ({ todos, deleteTodo, editTodo  , checkTodo}) => {
         {filteredTodos.length > 0 ? (
           filteredTodos.map((todo, index) => (
             <Box
-              key={todo.id}
+            key={todo.id}
+            width="100%"
+            bg={index % 2 === 0 ? 'white' : 'gray.100'}
+            p="4"
+            borderRadius="md"
+            boxShadow="md"
+            mb="2"
+          >
+            <HStack
+              spacing="4"
               width="100%"
-              bg={index % 2 === 0 ? 'white' : 'gray.100'}
-              p="4"
+              borderWidth="1px"
               borderRadius="md"
               boxShadow="md"
-              mb="2"
-              textDecoration={todo.checked ? 'line-through' : 'none'}
+              p="2"
             >
-              <HStack
-                spacing="4"
-                width="100%"
-                borderWidth="1px"
-                borderRadius="md"
-                boxShadow="md"
-                p="2"
+              <Checkbox
+                isChecked={todo.checked}
+                onChange={() => handlecheck(todo)}
+              />
+              <Text flex="1" textDecoration={todo.checked ? 'line-through' : 'none'}>
+                {todo.body}
+              </Text>
+              <Spacer />
+              <IconButton
+                icon={<FaEdit />}
+                onClick={() => editTodo(todo.id)}
+                aria-label={`Edit ${todo.body}`}
+                size={'sm'}
+              />
+              <Button
+                onClick={() => handleDelete(todo)}
+                leftIcon={<FaTrash />}
+                colorScheme="red"
+                size={'sm'}
               >
-                <Checkbox
-                  isChecked={todo.checked}
-                  onChange={() => handlecheck(todo)}
-                  
-                />
-                <Text flex="1" textDecoration={todo.checked ? 'line-through' : 'none'}>
-                  {todo.body}
-                </Text>
-                <Spacer />
-                <IconButton
-                  icon={<FaEdit />}
-                  onClick={() => editTodo(todo.id)}
-                  aria-label={`Edit ${todo.body}`}
-                  size={'sm'}
-                />
-                <Button
-                  onClick={() => handleDelete(todo)}
-                  leftIcon={<FaTrash />}
-                  colorScheme="red"
-                  size={'sm'}
-                >
-                  Delete
-                </Button>
-              </HStack>
-            </Box>
+                Delete
+              </Button>
+            </HStack>
+          </Box>
           ))
         ) : (
           <Text style={{ textAlign: 'center' }}>No results. Create a new one instead.</Text>
